@@ -7,6 +7,24 @@ Login
 - email: admin@admin.com
 - password: 123456
 
+http://localhost:3000/login
+<img width="1177" height="808" alt="image" src="https://github.com/user-attachments/assets/5bd3508b-456f-40e9-8d59-188a0b2adf0e" />
+
+
+## Useful scripts
+Backend:
+```bash
+cd Backend
+dotnet build                             # build
+dotnet run --project src/Employee.API/... # run the API
+```
+
+Frontend:
+```bash
+cd Frontend
+npm run dev    # development
+```
+   
 ### Prerequisites
 - Node.js 20 LTS or newer (recommended)
 - .NET SDK 8.0+

@@ -1,20 +1,20 @@
 ## Code Challenge Full Stack — Employee Management
 
-Guia rápido para rodar o Backend (.NET 8 + EF InMemory) e o Frontend (Next.js 16 + React 19) em desenvolvimento.
+Quick guide to run the Backend (.NET 8 + EF InMemory) and the Frontend (Next.js 16 + React 19) in development.
 
-### Pré‑requisitos
-- Node.js 20 LTS ou superior (recomendado)
+### Prerequisites
+- Node.js 20 LTS or newer (recommended)
 - .NET SDK 8.0+
-- NPM 10+ (ou PNPM/Yarn se preferir)
+- NPM 10+ (or PNPM/Yarn if you prefer)
 
-### Estrutura
+### Structure
 ```
 Backend/
   src/
-    Employee.API/              # API ASP.NET Core (porta padrão: 5058)
-    Employee.Application/      # Casos de uso (Application)
-    Employee.Domain/           # Entidades de domínio (Domain)
-    Employee.Infrastructure/   # EF Core + Repositórios (Infra)
+    Employee.API/              # ASP.NET Core API (default port: 5058)
+    Employee.Application/      # Use cases (Application)
+    Employee.Domain/           # Domain entities (Domain)
+    Employee.Infrastructure/   # EF Core + Repositories (Infra)
 Frontend/                      # Next.js (UI)
 ```
 
@@ -22,107 +22,105 @@ Frontend/                      # Next.js (UI)
 
 ## Backend (ASP.NET Core)
 
-### Como rodar
-1. Terminal na raiz do repositório:
+### How to run
+1. Terminal at the repository root:
    ```bash
    cd Backend
    dotnet build
    dotnet run --project src/Employee.API/EmployeeManagement.API.csproj
    ```
-2. A API sobe (por padrão) em `http://localhost:5058` com Swagger em `http://localhost:5058/swagger`.
+2. The API starts (by default) at `http://localhost:5058` with Swagger at `http://localhost:5058/swagger`.
 
-### Autenticação
-- Endpoint de login: `POST /api/auth/login`
-- Credenciais padrão (mock):
+### Authentication
+- Login endpoint: `POST /api/auth/login`
+- Default credentials (mock):
   - email: `admin@admin.com`
   - password: `123456`
-- A resposta inclui `accessToken` (JWT) e `expiresInSeconds`.
+- The response includes `accessToken` (JWT) and `expiresInSeconds`.
 
-### Recursos principais
-- `GET /api/employees` — lista funcionários
-- `GET /api/employees/{id}` — detalhe
-- `POST /api/employees` — cria
-- `PUT /api/employees/{id}` — atualiza
-- `DELETE /api/employees/{id}` — remove
+### Main endpoints
+- `GET /api/employees` — list employees
+- `GET /api/employees/{id}` — detail
+- `POST /api/employees` — create
+- `PUT /api/employees/{id}` — update
+- `DELETE /api/employees/{id}` — delete
 
-Observações:
-- O projeto usa EF Core InMemory para desenvolvimento (nenhum banco externo necessário).
-- CORS está liberado apenas em Development.
+Notes:
+- The project uses EF Core InMemory for development (no external database required).
+- CORS is allowed only in Development.
 
-### Variáveis e configuração
-- `appsettings.Development.json` já contém a seção `Jwt` (Issuer, Audience, Secret) para desenvolvimento.
-- Para alterar a porta, você pode:
-  - Editar `Backend/src/Employee.API/Properties/launchSettings.json` (campo `applicationUrl`), ou
-  - Executar com: `dotnet run --project src/Employee.API/EmployeeManagement.API.csproj --urls http://localhost:5058`
+### Variables and configuration
+- `appsettings.Development.json` already contains the `Jwt` section (Issuer, Audience, Secret) for development.
+- To change the port, you can:
+  - Edit `Backend/src/Employee.API/Properties/launchSettings.json` (`applicationUrl` field), or
+  - Run with: `dotnet run --project src/Employee.API/EmployeeManagement.API.csproj --urls http://localhost:5058`
 
 ---
 
 ## Frontend (Next.js)
 
-### Variáveis de ambiente
-Crie `Frontend/.env.local` com a URL base da API (incluindo `/api`):
+### Environment variables
+Create `Frontend/.env.local` with the API base URL (including `/api`):
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:5058/api
 ```
 
-### Como rodar
-1. Terminal na raiz do repositório:
+### How to run
+1. Terminal at the repository root:
    ```bash
    cd Frontend
    npm install
    npm run dev
    ```
-2. A aplicação sobe (por padrão) em `http://localhost:3000`.
+2. The app starts (by default) at `http://localhost:3000`.
 
-### Fluxo de login (UI)
-1. Acesse `http://localhost:3000/login`.
-2. Use as credenciais: `admin@admin.com / 123456`.
-3. Após logar, o token é salvo no `localStorage` e as chamadas passam a enviar `Authorization: Bearer <token>`.
-
----
-
-## Passo a passo end‑to‑end
-1. Suba o Backend na porta `5058`.
-2. Configure `Frontend/.env.local` com `NEXT_PUBLIC_API_URL=http://localhost:5058/api`.
-3. Suba o Frontend em `http://localhost:3000`.
-4. Faça login na UI (`/login`).
-5. Navegue pela lista e CRUD de Employees.
+### Login flow (UI)
+1. Go to `http://localhost:3000/login`.
+2. Use the credentials: `admin@admin.com / 123456`.
+3. After logging in, the token is saved in `localStorage` and requests start sending `Authorization: Bearer <token>`.
 
 ---
 
-## Scripts úteis
+## End-to-end walkthrough
+1. Start the Backend on port `5058`.
+2. Set `Frontend/.env.local` with `NEXT_PUBLIC_API_URL=http://localhost:5058/api`.
+3. Start the Frontend at `http://localhost:3000`.
+4. Log in via the UI (`/login`).
+5. Navigate through the list and CRUD of Employees.
+
+---
+
+## Useful scripts
 Backend:
 ```bash
-dotnet build                             # compila
-dotnet run --project src/Employee.API/... # roda a API
+dotnet build                             # build
+dotnet run --project src/Employee.API/... # run the API
 ```
 
 Frontend:
 ```bash
-npm run dev    # desenvolvimento
-npm run build  # build de produção
-npm run start  # inicia build de produção
+npm run dev    # development
+npm run build  # production build
+npm run start  # start production build
 ```
 
 ---
 
 ## Troubleshooting
-- Frontend não conecta ao Backend:
-  - Verifique `Frontend/.env.local` — a URL deve incluir `/api` (ex.: `http://localhost:5058/api`).
-  - Confirme se a API está ativa em `http://localhost:5058/swagger`.
-- 401 após algum tempo:
-  - O token expira. Faça login novamente ou limpe `localStorage` (`auth_token`, `auth_expires_at`).
-- Conflito de porta (5058 ou 3000):
-  - Ajuste a porta do Backend via `launchSettings.json` ou `--urls`.
-  - Rode o Frontend com `PORT=3001 npm run dev`.
-- CORS em ambientes não‑dev:
-  - Em produção, configure CORS explicitamente e defina `NEXT_PUBLIC_API_URL` para o host correto (sempre com `/api`).
+- Frontend cannot connect to the Backend:
+  - Check `Frontend/.env.local` — the URL must include `/api` (e.g., `http://localhost:5058/api`).
+  - Confirm the API is running at `http://localhost:5058/swagger`.
+- 401 after some time:
+  - The token expires. Log in again or clear `localStorage` (`auth_token`, `auth_expires_at`).
+- Port conflict (5058 or 3000):
+  - Adjust the Backend port via `launchSettings.json` or `--urls`.
+  - Run the Frontend with `PORT=3001 npm run dev`.
+- CORS in non-dev environments:
+  - In production, configure CORS explicitly and set `NEXT_PUBLIC_API_URL` to the correct host (always including `/api`).
 
 ---
 
-## Notas de arquitetura
-- Camadas seguem DDD (Domain, Application, Infrastructure) e princípios SOLID.
-- API expõe controllers finos; casos de uso concentram a lógica de aplicação.
-- Infra usa EF Core InMemory em dev; troque por provider relacional quando necessário.
-
-
+## Architecture notes
+- Layers follow DDD (Domain, Application, Infrastructure) and SOLID principles.
+- API exposes thin controllers; use cases concentrate the application logic.
+- Infra uses EF Core InMemory in dev; switch to a relational provider when needed.

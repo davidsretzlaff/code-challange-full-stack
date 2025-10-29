@@ -361,3 +361,59 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+
+
+# Dependências
+node_modules/
+
+# Build
+dist/
+build/
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Cache
+.cache/
+.vite/
+.next/
+out/
+.tmp/
+.temp/
+coverage/
+*.tsbuildinfo
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Testes
+jest-cache/
+jest-test-results.json
+coverage/
+
+# Outros
+*.local
+*.log
+*.lock
+*.pid
+*.seed

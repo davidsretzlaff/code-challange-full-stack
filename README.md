@@ -1,4 +1,5 @@
 ## Code Challenge Full Stack — Employee Management
+<img width="2548" height="972" alt="image" src="https://github.com/user-attachments/assets/b7057dbc-04f5-4d0a-a7f3-c5ed58af701d" />
 
 Quick guide to run the Backend (.NET 8 + EF InMemory) and the Frontend (Next.js 16 + React 19) in development.
 
